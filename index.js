@@ -19,7 +19,7 @@ module.exports = (url, options) => {
 
     promise
         .then(() => {
-            console.info("Mongoose %s Connected to Database. %s", mongoose.version);
+            console.info("Mongoose %s Connected to Database.", mongoose.version);
         }).catch(err => {
             console.error("Database or Mongoose error. %s", err.stack);
         });
