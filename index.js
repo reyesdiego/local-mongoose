@@ -16,21 +16,22 @@ module.exports = (url, options) => {
 
     mongoose.connection.on('connected', () => {
         console.info("Mongoose %s Connected to Database. %s", mongoose.version, url);
-});
+    });
 
-mongoose.connection.on('error', err => {
-    console.error("Database or Mongoose error. %s", err.stack);
-});
-mongoose.connection.on('disconnected', () => {
-    console.error("Mongoose default connection disconnected, el proceso %s se abortará", process.pid);
-process.exit();
-});
+    mongoose.connection.on('error', err => {
+        console.error("Database or Mongoose error. %s", err.stack);
+    });
+    mongoose.connection.on('disconnected', () => {
+        console.error("Mongoose default connection disconnected, el proceso %s se abortará", process.pid);
+        process.exit();
+    });
 
-process.on('SIGINT', () => {
-    mongoose.connection.close(() => {
-    console.info("Mongoose default connection disconnected through app termination");
-process.exit();
-});
-});
+    process.on('SIGINT', () => {
+        mongoose.connection.close(() => {
+            console.info("Mongoose default connection disconnected through app termination");
+            process.exit();
+        });
+    });
 
+    mongoose.Promise = Promise;
 };
